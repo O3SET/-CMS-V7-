@@ -9,9 +9,6 @@ headers = {
     'Upgrade-Insecure-Requests': '1'
 }
 
-# 定义请求参数
-params = {'job': 'download', 'url': 'ZGF0YS9jb25maWcucGg8'}
-
 # 从urls.txt文件中读取URL列表
 with open('urls.txt', 'r') as f:
     urls = f.readlines()
